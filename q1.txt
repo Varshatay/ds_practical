@@ -1,0 +1,256 @@
+#include<iostream>
+#include<cmath>
+using namespace std;
+class SET
+{
+    int setA[10];
+    int setB[10];
+    public:
+        bool ismember(int setA[],int sizeA);
+        void power_set(int setA[],int sizeA);
+        bool subset(int setA[],int set[],int sizeA,int size);
+        void Union_Inter(int setA[],int sizeA,int setB[],int sizeB);
+        void complement(int Uniset[],int setA[],int sizeU,int sizeA);
+        void set_diff(int setA[],int sizeA,int setB[],int sizeB);
+        void symm_diff(int setA[],int sizeA,int setB[],int sizeB);
+        void cartisian_product(int setA[],int setB[],int sizeA,int sizeB);
+};
+bool SET::ismember(int setA[],int sizeA)
+{
+    int a,i;
+    cout<<"Element you are searching for in first set:";
+    cin>>a;
+    for (i=0;i<sizeA;i++)
+    {
+        if (setA[i]==a)
+           return true;        
+    }
+    return false;
+}
+void SET::power_set(int setA[],int sizeA)
+{
+    unsigned int p_size=pow(2,sizeA);
+    int i,j;
+    for (i=0;i<p_size;i++)
+    {
+        for (j=0;j<sizeA;j++)
+        {
+            if (i & (1<<j))
+               cout<<setA[j];
+         }
+         cout<<endl;
+    }
+}
+bool SET::subset(int setA[],int set[],int sizeA,int size)
+{
+    int i,j;
+    for (i=0;i<size;i++)
+    {
+       for (j=0;j<sizeA;j++)
+       {
+           if (set[i]==setA[j])
+           {
+               break;
+           }
+       }
+       if (size==j)
+           return true;
+    }
+    return false;
+}
+void SET::Union_Inter(int setA[],int sizeA,int setB[],int sizeB)
+{
+    int uSize=sizeA+sizeB;
+		  int uSet[uSize];
+		  int unionSet[uSize];
+		  int iSet[uSize];
+		  int x=0,y=0;	
+    int i,j;
+		  for(i=0; i<sizeA; i++)
+		  {
+			     uSet[x]=setA[i];
+			     x++;
+		  }	
+		  for(i=0; i<sizeB; i++)
+		  {
+			     uSet[x]=setB[i];
+			     x++;
+		  }	
+		  for(i=0; i<x; i++)
+		  {
+			     for(j=i+1; j<x; j++)
+			     {
+			         	if(uSet[i] == uSet[j])
+			         {
+					           iSet[y]=uSet[i];
+				            	y++;				
+					           for(int k=j; k<x-1; k++)
+						              uSet[k]=uSet[k+1];
+						              x--;
+			        	 }
+				        else
+					           continue;
+			     }
+		  }
+		  cout << "Union of two sets is :";
+		  for(i=0; i<x; i++)
+			    cout << uSet[i]<<",";
+       cout<<endl;	
+		  if(y != 0)
+		  {
+			     cout << "Intersection of two sets is :";		
+		      for(i=0; i<y; i++)
+				       cout << iSet[i]<<",";
+		  }
+		  	else
+		      	cout << "No intersection for these sets:";
+}
+void SET::complement(int Uniset[],int setA[],int sizeU,int sizeA)
+{
+	   int i,j;
+	   for(int i=0;i<sizeU;i++)
+    {
+		      for(j=0;j<sizeA;j++)
+        {
+			         if(Uniset[i]==setA[j])
+			         break;
+		      }
+		      if(j==sizeA)
+        {
+			         cout<<Uniset[i]<<" ";
+		      }	
+	   }
+}
+void SET::set_diff(int setA[],int sizeA,int setB[],int sizeB)
+{
+	   int i=0,j=0;
+	   for(i=0;i<sizeA;i++)
+    {
+		      for(j=0;j<sizeB;j++)
+        {
+			     if(setA[i]==setB[j])
+			        break;
+	       	}
+		      if(j==sizeB)
+        {
+			     cout<<setA[i]<<" ";
+	   	    }
+	   }
+}
+void SET::symm_diff(int setA[],int sizeA,int setB[],int sizeB)
+{
+	   int i = 0, j = 0;
+    while (i < sizeA && j < sizeB )
+    {      
+         if (setA[i] < setB[j]) 
+         {
+             cout << setA[i] << " ";
+             i++;
+         }
+         else if (setB[j] < setA[i]) 
+         {
+             cout << setB[j] << " ";
+             j++;
+         }   
+         else 
+         {
+             i++;
+             j++;
+         }
+    }
+    while (i < sizeA) 
+    {
+        cout << setA[i] << " ";
+        i++;
+    }
+    while (j < sizeB) 
+    {
+        cout << setB[j] << " ";
+        j++;
+    }
+}
+void SET::cartisian_product(int setA[],int setB[],int sizeA,int sizeB)
+{
+for (int i=0; i<sizeA; i++)
+for (int j = 0; j < sizeB; j++)
+cout<<"("<<setA[i]<<","<<setB[j]<<")";
+}
+int main()
+{
+    SET s;
+    bool x;
+    int setA[10],setB[10],set[10],Uniset[10];
+    int sizeA,sizeB,sizeU,size,ch,i;
+    cout<<"Enter size of first set:";
+    cin>>sizeA;
+    cout<<"Enter elements of first set:";
+    for (i=0;i<sizeA;i++)
+    { 
+        cin>>setA[i];
+    }
+    cout<<"Enter size of second set:";
+    cin>>sizeB;
+    cout<<"Enter elements of second set:";
+    for (i=0;i<sizeB;i++)
+    {
+        cin>>setB[i];
+    }
+    cout<<"\nMenu"<<endl;
+    {
+         cout<<"\nEnter your choice:";
+         cin>>ch;
+         switch(ch)
+         {case 1:x=s.ismember(setA,sizeA);
+                 if (x==true)
+                     cout<<"True:Element found!";
+                 else
+                     cout<<"False:Element not found!";
+                 break;
+            
+          case 2:cout<<"Power set of first set is:";
+                 s.power_set(setA,sizeA);
+                 break;
+     
+          case 3:cout<<"Enter size of your set:";
+                 cin>>size;
+                 cout<<"Enter your set:";
+                 for (i=0;i<size;i++)
+                 {
+                     cin>>set[i];
+                 }
+                 x=s.subset(setA,setB,sizeA,sizeB);  
+                 if (x==true)
+                     cout<<"Your set is SUBSET of first set!!";
+                 else
+                     cout<<"Your set is NOT A SUBSET of first set!!";
+                 break;
+    
+          case 4:s.Union_Inter(setA,sizeA,setB,sizeB);
+                 break;
+            
+          case 5:cout<<"Enter size of universal set:";
+                 cin>>sizeU;
+                 cout<<"Enter elements of universal set:";
+                 for (i=0;i<sizeU;i++)
+                 {
+                      cin>>Uniset[i];
+                 }
+                 cout<<"Complement of first set is:";
+                 s.complement(Uniset,setA,sizeU,sizeA);
+                 break;
+            
+          case 6:cout<<"\nSet difference of both the sets is:";
+                 s.set_diff(setA,sizeA,setB,sizeB);
+                 cout<<"\nSymmetric difference of both the sets is:";
+                 s.symm_diff(setA,sizeA,setB,sizeB);
+                 break;
+
+          case 7:cout<<"Cartisian product of both sets is:";
+                 s.cartisian_product(setA,setB,sizeA,sizeB);
+                 break;
+          default:
+                 cout<<"\nInvalid request!";
+          }
+   }
+   return 0;      
+}

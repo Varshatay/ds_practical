@@ -1,0 +1,51 @@
+/*Ques 4. For any number n, write a program to list all the solution of the equation X1 + X2 + X3 up to Xn=C where C is a constant and C is less than equal to 10 and X1, X2 ,X3 up to Xn are non negative integers , using brute force strategy.*/
+
+#include <iostream>
+
+using namespace std;
+
+const int MAX_N = 10; // Maximum value for n
+
+int solution[MAX_N] = {0}; // Array to store the solution
+
+// Recursive function to generate solutions
+void generateSolutions(int n, int C, int index, int currentSum) {
+    // Base case: All variables have been assigned a value
+    if (index == n) {
+        // Check if the sum of variables is equal to C
+        if (currentSum == C) {
+            // Print the solution
+            for (int i = 0; i < n; i++) {
+                cout << solution[i] << " ";
+            }
+            cout << endl;
+        }
+        return;
+    }
+
+    // Assign values to the variables and recursively generate solutions
+    for (int i = 0; i <= C - currentSum; i++) {
+        solution[index] = i;
+        generateSolutions(n, C, index + 1, currentSum + i);
+    }
+}
+
+// Function to list all the solutions of the equation
+void listSolutions(int n, int C) {
+    cout << "Solutions for the equation x1 + x2 + x3 + ... + xn = " << C << ":\n";
+    generateSolutions(n, C, 0, 0); // Start generating solutions from index 0
+}
+
+int main() {
+    int n, C;
+
+    cout << "Enter the value of n: ";
+    cin >> n;
+
+    cout << "Enter the value of C (<= 10): ";
+    cin >> C;
+
+    listSolutions(n, C);
+
+    return 0;
+}

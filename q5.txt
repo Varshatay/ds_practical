@@ -1,0 +1,41 @@
+/*Ques 5. Write a program to evaluate a polynomial function for example store F(n) = 4n^2+ 2n + 9 in an array and 4 a given value of n say n is equal to 5 compute the value of f(n).*/
+
+using namespace std;
+
+// Function to evaluate a polynomial function
+int evaluatePolynomial(int coefficients[], int degree, int x) {
+    int result = 0;
+
+    // Evaluate the polynomial using Horner's method
+    for (int i = degree; i >= 0; i--) {
+        result = result * x + coefficients[i];
+    }
+
+    return result;
+}
+
+int main() {
+    const int MAX_DEGREE = 100; // Maximum degree of the polynomial
+
+    int degree;
+    int coefficients[MAX_DEGREE + 1];
+    int x;
+
+    cout << "Enter the degree of the polynomial: ";
+    cin >> degree;
+
+    cout << "Enter the coefficients of the polynomial (from highest to lowest degree): ";
+    for (int i = degree; i >= 0; i--) {
+        cin >> coefficients[i];
+    }
+
+    cout << "Enter the value of x: ";
+    cin >> x;
+
+    // Evaluate the polynomial for the given value of x
+    int result = evaluatePolynomial(coefficients, degree, x);
+
+    cout << "The value of the polynomial for x = " << x << " is: " << result << endl;
+
+    return 0;
+}

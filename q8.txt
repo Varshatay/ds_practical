@@ -1,0 +1,28 @@
+/*ques 8. write a program to accept a directed graph G and compute the in degree and out degree of each vertex */
+
+#include <iostream>
+using namespace std;
+
+int main() {
+    int V, E;
+    cout<<"Enter the vertices and edges";
+    cin >> V >> E;
+
+    int indeg[V] = {0}, outdeg[V] = {0};
+
+    for (int i = 0; i < E; i++) {
+        int u, v;
+        cout<<"enter the direction of vertices";
+        cin >> u >> v;
+        indeg[v]++;
+        outdeg[u]++;
+       
+    }
+
+    cout << "Vertex\tIn-degree\tOut-degree" << endl;
+    for (int i = 0; i < V; i++) {
+        cout << i << "\t" << indeg[i] << "\t\t" << outdeg[i] << endl;
+    }
+
+    return 0;
+}

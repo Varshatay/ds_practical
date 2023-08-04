@@ -1,0 +1,90 @@
+/*Ques 2.Create a class relation use Matrix notation to represent a relation include member function to check if the relation is reflexive, symmetric ,anti symmetric or transative using this functions check whether the given relation is equivalence or partial order relation or none.*/
+
+
+#include <iostream>
+#include <vector>
+using namespace std;
+
+class RELATION {
+	private:
+		vector <vector <int> > matrix;
+		int size;
+	
+	public:
+		RELATION(int n ){
+			size =n;
+			matrix.resize(size, vector <int> (size, 0));
+		}
+		
+		void set(int i, int j, int value){
+			matrix[i][j]=value;
+		}
+		
+		bool isReflexive() {
+			for(int i=0; i<size; i++){
+				if (matrix[i][i]==0){
+					return false;
+				}
+			}
+			return true;
+		}
+		
+		bool isSymmetric(){
+			for (int i=0; i<size; i++){
+				for (int j = 0; j<size; j++){
+					if (matrix[i][j] != matrix [j][i]){
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		
+		bool isAntiSymmetric(){
+			for(int i =0; i<size; i++){
+				for (int j =0; j<size; j++){
+					if (matrix[i][j]==1 && matrix [j][i]==1 && i != j){
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+		
+		bool isTransitive (){
+			for(int i =0; i<size; i++){
+				for(int j =0; j<size; j++){
+					for(int k =0; k<size; k++){
+						if(matrix[i][j]==1 && matrix [j][k]==1 && matrix [i][k]){
+							return false;
+						}
+					}
+				} 
+			}
+			return true;
+		}
+};
+
+int main (){
+	RELATION r(4);
+	
+	r.set(0,1,1);
+	r.set(0,2,1);
+	r.set(1,0,1);
+	r.set(2,0,1);
+	r.set(1,2,0);
+	r.set(2,1,0);
+	r.set(2,3,1);
+	r.set(3,2,1);
+	
+	if(r.isReflexive() && r.isTransitive()){
+		cout << "Equivalence relation"<<endl;
+	}
+	else if(r.isReflexive() && r.isAntiSymmetric() && r.isTransitive()){
+		cout << "Partial Order relatoin"<<endl;
+	}
+	else {
+		cout << "None"<<endl;
+	}
+	return 0;
+}

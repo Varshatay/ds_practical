@@ -1,0 +1,59 @@
+/*Q6. Write a program to check if a given graph is a complete graph. Represent the graph using the adjacency matrix representation.*/
+
+
+#include <iostream>
+
+using namespace std;
+
+const int MAX_VERTICES = 100; // Maximum number of vertices in the graph
+
+// Function to check if a graph is a complete graph
+bool isCompleteGraph(int graph[MAX_VERTICES][MAX_VERTICES], int numVertices) {
+    // Check for each pair of vertices if there is an edge between them
+    for (int i = 0; i < numVertices; i++) {
+        for (int j = 0; j < numVertices; j++) {
+            // Skip self-loops
+            if (i == j) {
+                continue;
+            }
+
+            // If there is no edge between vertices i and j, return false
+            if (graph[i][j] != 1) {
+                return false;
+            }
+        }
+    }
+
+    return true;
+}
+
+int main() {
+    int numVertices, numEdges;
+
+    cout << "Enter the number of vertices in the graph: ";
+    cin >> numVertices;
+
+    cout << "Enter the number of edges in the graph: ";
+    cin >> numEdges;
+
+    int graph[MAX_VERTICES][MAX_VERTICES] = {0};
+
+    cout << "Enter the edges of the graph:\n";
+    for (int i = 0; i < numEdges; i++) {
+        int u, v;
+        cin >> u >> v;
+
+        // Add edges to the adjacency matrix representation
+        graph[u][v] = 1;
+        graph[v][u] = 1;
+    }
+
+    // Check if the graph is complete
+    if (isCompleteGraph(graph, numVertices)) {
+        cout << "The graph is a complete graph.\n";
+    } else {
+        cout << "The graph is not a complete graph.\n";
+    }
+
+    return 0;
+}
